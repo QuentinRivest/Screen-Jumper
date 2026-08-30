@@ -7,6 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 find_package(raylib REQUIRED)
 find_package(Threads REQUIRED)
 
-add_executable(main main.cpp)
+add_executable(main main.cpp platforms.cpp)
 
 target_link_libraries(main PRIVATE raylib)
