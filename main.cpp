@@ -143,7 +143,7 @@ void updateLilGuy(const int SCREEN_WIDTH, const int SCREEN_HEIGHT) {
       y_velocity = -JUMP_SPEED;
     }
 
-    if (IsKeyDown(KEY_DOWN)) {
+    if (lil_guy_pos.y + LIL_GUY_DIM.y < SCREEN_HEIGHT && IsKeyDown(KEY_DOWN)) {
       can_jump = false;
       lil_guy_pos.y += 1;
     }
