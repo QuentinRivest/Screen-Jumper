@@ -3,7 +3,7 @@
 #include <vector>
 
 
-void initRandomPlatforms(const int SCREEN_WIDTH, const int SCREEN_HEIGHT,
+void updateRandomPlatforms(const int SCREEN_WIDTH, const int SCREEN_HEIGHT,
                              const int platforms_count);
 
 void updatePlatforms(const int SCREEN_WIDTH, const int SCREEN_HEIGHT);

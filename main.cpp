@@ -8,6 +8,9 @@
 
 namespace {
 
+// Constants.
+const int RANDOM_PLATFORMS_COUNT = 20;
+
 // Lil guy specs.
 const Vector2 LIL_GUY_DIM{25, 25};
 Vector2 lil_guy_pos;
@@ -37,7 +40,7 @@ void drawPlatforms(const int SCREEN_WIDTH, const int SCREEN_HEIGHT);
 
 
 int main(void) {
-  // SetConfigFlags(FLAG_WINDOW_TRANSPARENT);
+  SetConfigFlags(FLAG_WINDOW_TRANSPARENT);
   SetConfigFlags(FLAG_FULLSCREEN_MODE);
   InitWindow(0, 0, "Screen Jumper");
   SetWindowState(FLAG_WINDOW_UNDECORATED);
@@ -51,9 +54,16 @@ int main(void) {
   };
 
   SetTargetFPS(60);
-  initRandomPlatforms(SCREEN_WIDTH, SCREEN_HEIGHT, 10);
+  updateRandomPlatforms(SCREEN_WIDTH, SCREEN_HEIGHT, RANDOM_PLATFORMS_COUNT);
 
   while (!WindowShouldClose()) {
+    // Update screen.
+    if (IsKeyPressed(KEY_GRAVE)) {
+      updateRandomPlatforms(SCREEN_WIDTH,
+                            SCREEN_HEIGHT,
+                            RANDOM_PLATFORMS_COUNT);
+    }
+
     updateLilGuy(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     BeginDrawing();
@@ -127,12 +137,17 @@ void updateLilGuy(const int SCREEN_WIDTH, const int SCREEN_HEIGHT) {
     startFallingIfInAir(SCREEN_WIDTH, SCREEN_HEIGHT, new_pos);
   }
 
-  if (can_jump && IsKeyDown(KEY_UP)) {
-    can_jump   = false;
-    y_velocity = -JUMP_SPEED;
-  }
+  if (can_jump) {  // i.e., player is on ground/platform.
+    if (IsKeyDown(KEY_UP)) {
+      can_jump   = false;
+      y_velocity = -JUMP_SPEED;
+    }
 
-  if (!can_jump) {
+    if (IsKeyDown(KEY_DOWN)) {
+      can_jump = false;
+      lil_guy_pos.y += 1;
+    }
+  } else {  // i.e., player is in the air.
     const Vector2 new_pos = {lil_guy_pos.x, lil_guy_pos.y + y_velocity};
 
     if (positionIsInBounds(new_pos)) {

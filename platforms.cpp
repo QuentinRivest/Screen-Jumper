@@ -16,11 +16,12 @@ const float platform_len = 200.0f;
 }  // namespace
 
 
-void initRandomPlatforms(const int SCREEN_WIDTH, const int SCREEN_HEIGHT,
+void updateRandomPlatforms(const int SCREEN_WIDTH, const int SCREEN_HEIGHT,
                          const int platforms_count) {
   std::uniform_real_distribution<float> x_distrib(0, SCREEN_WIDTH);
   std::uniform_real_distribution<float> y_distrib(0, SCREEN_HEIGHT);
 
+  curr_platforms.clear();
   curr_platforms.reserve(platforms_count);
 
   for (int i = 0; i < platforms_count; ++i) {
